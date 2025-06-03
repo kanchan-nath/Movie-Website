@@ -1,32 +1,66 @@
-import React, { useState } from 'react'
-import { Movie } from './components/Movie'
+import React from 'react'
+import AppLayout from "./layout/AppLayout"
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import HeroSection from './components/HeroSection'
+import Movie from './components/Movie'
+import Trending from './components/Trending'
+import Register from './components/Register'
+import "./styling/style.css"
+import Login from './components/Login'
+import About from './components/About'
+import Contact from './components/Contact'
+import Privacy from './components/Privacy'
+import Terms from './components/Terms'
 const App = () => {
-const [searchItem, setSearchItem] = useState([])
-const [searchResults, setSearchResults] = useState([]);
-const [selectGenre, setSelectGenre] = useState('')
-const [genere, setGenere] = useState([])
-const [years, setYears] = useState([])
-const [selectedYear, setSelectedYear] = useState('')
-const [selectRating, setSelectRating] = useState('')
-const [rating, setRating] = useState([])
 
+  const router = createBrowserRouter([{
+    path: "/",
+    element: <AppLayout/>,
+    children:([
+      {
+        path:"/",
+        element: <HeroSection/>,
+      },
+      {
+        path:"/movie",
+        element: <Movie/>,
+      },
+      {
+        path:"/trending",
+        element: <Trending/>,
+      },
+      {
+        path:"/register",
+        element: <Register/>,
+      },
+       {
+        path:"/login",
+        element: <Login/>,
+      },
+      {
+        path:"/about",
+        element: <About/>,
+      },
+      {
+        path:"/contact",
+        element: <Contact/>,
+      },
+      {
+        path:"/privacy",
+        element: <Privacy/>,
+      },
+      {
+        path:"/terms",
+        element: <Terms/>,
+      }
+    ])
+
+  }])
   return (
-    <Movie 
-    searchItem={searchItem}
-        searchResults={searchResults}
-        selectGenre={selectGenre}
-        setSelectGenre={setSelectGenre}
-        genere={genere}
-        setGenere={setGenere}
-        selectedYear={selectedYear}
-        setSelectedYear={setSelectedYear}
-        years={years}
-        setYears={setYears}
-        selectRating={selectRating}
-        setSelectRating={setSelectRating}
-        rating={rating}
-        setRating={setRating}
-    setSearchResults={setSearchResults} setSearchItem={setSearchItem} />
+    <>
+    
+    <RouterProvider router={router}/>
+    </>
   )
 }
 

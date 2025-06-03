@@ -1,74 +1,101 @@
-import "./style.css"
-import Header from "./Header"
-import HeroSection from "./HeroSection"
-import FilterSection from "./FilterSection"
-import MoviesGrid from "./MoviesGrid"
-import MovieModel from "./MovieModel"
-import Footer from "./Footer"
-import React, { useState } from 'react'
-
-export const Movie = ({ 
+import React from 'react'
+// import"./Style/style.css"
+const Movie = () => {
+  return (
+    <main class="main-content">
+        <div class="container">
+            <div class="section-header">
+                <h2> Movies</h2>
+                <div class="view-toggle">
+                    <button class="toggle-btn active" onClick="">
+                        <i class="fas fa-th"></i>
+                    </button>
+                    <button class="toggle-btn" onClick="">
+                        <i class="fas fa-list"></i>
+                    </button>
+                </div>
+            </div>
+            
         
+            <div class="loading" style={{ display: 'none' }}>
+                <div class="spinner"></div>
+                <p>Loading movies...</p>
+            </div>
+
         
-        selectGenre,
-        setSelectGenre,
-        genere,
-        setGenere,
-        years,
-        setYears,
-        selectedYear,
-        setSelectedYear,
-        selectRating,
-        setSelectRating,
-        rating,
-        setRating,
-        setSearchItem, 
-        searchItem,
-        searchResults, 
-        setSearchResults  }) =>{
+            <div class="movies-grid" id="moviesGrid">
+            
+                <div class="movie-card" onClick="">
+                    <div class="movie-poster">
+                        <div class="poster-placeholder">
+                            <i class="fas fa-image"></i>
+                        </div>
+                        <div class="movie-overlay">
+                            <button class="play-btn">
+                                <i class="fas fa-play"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="movie-info">
+                        <h3>Sample Movie Title</h3>
+                        <div class="movie-meta">
+                            <span class="rating">
+                                <i class="fas fa-star"></i>
+                                8.5
+                            </span>
+                            <span class="year">2024</span>
+                        </div>
+                        <p class="movie-description">
+                            Sample description of the movie that will be replaced with actual data from API...
+                        </p>
+                        <div class="movie-genres">
+                            <span class="genre-tag">Action</span>
+                            <span class="genre-tag">Adventure</span>
+                        </div>
+                    </div>
+                </div>
 
+               
+                <div class="movie-card" onClick="">
+                    <div class="movie-poster">
+                        <div class="poster-placeholder">
+                            <i class="fas fa-image"></i>
+                        </div>
+                        <div class="movie-overlay">
+                            <button class="play-btn">
+                                <i class="fas fa-play"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="movie-info">
+                        <h3>Another Movie</h3>
+                        <div class="movie-meta">
+                            <span class="rating">
+                                <i class="fas fa-star"></i>
+                                7.8
+                            </span>
+                            <span class="year">2023</span>
+                        </div>
+                        <p class="movie-description">
+                            Another sample description that will be replaced...
+                        </p>
+                        <div class="movie-genres">
+                            <span class="genre-tag">Comedy</span>
+                            <span class="genre-tag">Drama</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-
-    return (
-        <>
-        <Header setSearchResults={setSearchResults} setSearchItem={setSearchItem} searchItem={searchItem}/>
-        <HeroSection/>
-        <FilterSection 
-        
-        searchItem={searchItem}
-        searchResults={searchResults}
-        selectGenre={selectGenre}
-        setSelectGenre={setSelectGenre}
-        genere={genere}
-        setGenere={setGenere}
-        selectedYear={selectedYear}
-        setSelectedYear={setSelectedYear}
-        years={years}
-        setYears={setYears}
-        selectRating={selectRating}
-        setSelectRating={setSelectRating}
-        rating={rating}
-        setRating={setRating}
-        />
-        <MoviesGrid 
-        searchItem={searchItem}
-        searchResults={searchResults}
-        selectGenre={selectGenre}
-        setSelectGenre={setSelectGenre}
-        genere={genere}
-        setGenere={setGenere}
-        selectedYear={selectedYear}
-        setSelectedYear={setSelectedYear}
-        years={years}
-        setYears={setYears}
-        selectRating={selectRating}
-        setSelectRating={setSelectRating}
-        rating={rating}
-        setRating={setRating}
-        />
-        <MovieModel/>
-        <Footer/>
-        </>
-
-    )
+           
+            <div class="load-more-container">
+                <button class="load-more-btn" onClick="">
+                    Load More Movies
+                </button>
+            </div>
+        </div>
+    </main>
+  )
 }
+
+export default Movie

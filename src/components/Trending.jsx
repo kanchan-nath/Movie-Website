@@ -1,85 +1,63 @@
-import React from 'react'
-import "../styling/trending.css"
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import '../styling/trending.css';
+
 const Trending = () => {
+  const [trendingMovies, setTrendingMovies] = useState([]);
+
+  useEffect(() => {
+    const fetchTrending = async () => {
+      try {
+        const res = await axios.get(
+          'https://api.themoviedb.org/3/trending/movie/week',
+          {
+            params: {
+              api_key: '769f5e84c79983f742a9f2ec02af3e55',
+            },
+          }
+        );
+        setTrendingMovies(res.data.results);
+      } catch (err) {
+        console.error('Error fetching trending movies:', err);
+      }
+    };
+
+    fetchTrending();
+  }, []);
+
   return (
-    <section class="trending-content">
-            <h2 class="section-title">Trending Now</h2>
-            
-            <div class="trending-grid">
-                <div class="movie-card" onclick="handleMovieClick('movie1')">
-                    <div class="movie-poster">🎬</div>
-                    <div class="movie-info">
-                        <h3 class="movie-title">Trending Movie 1</h3>
-                        <div class="movie-meta">2024 • Action</div>
-                        <div class="movie-rating">
-                            <span class="rating-stars">★★★★☆</span>
-                            <span>8.5</span>
-                        </div>
-                    </div>
-                </div>
+    <section className="trending-content">
+      <h2 className="section-title">Trending Now</h2>
 
-                <div class="movie-card" onclick="handleMovieClick('movie2')">
-                    <div class="movie-poster">🎭</div>
-                    <div class="movie-info">
-                        <h3 class="movie-title">Trending Movie 2</h3>
-                        <div class="movie-meta">2024 • Drama</div>
-                        <div class="movie-rating">
-                            <span class="rating-stars">★★★★★</span>
-                            <span>9.2</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="movie-card" onclick="handleMovieClick('movie3')">
-                    <div class="movie-poster">🚀</div>
-                    <div class="movie-info">
-                        <h3 class="movie-title">Trending Movie 3</h3>
-                        <div class="movie-meta">2024 • Sci-Fi</div>
-                        <div class="movie-rating">
-                            <span class="rating-stars">★★★★☆</span>
-                            <span>8.7</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="movie-card" onclick="handleMovieClick('movie4')">
-                    <div class="movie-poster">😂</div>
-                    <div class="movie-info">
-                        <h3 class="movie-title">Trending Movie 4</h3>
-                        <div class="movie-meta">2024 • Comedy</div>
-                        <div class="movie-rating">
-                            <span class="rating-stars">★★★☆☆</span>
-                            <span>7.8</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="movie-card" onclick="handleMovieClick('movie5')">
-                    <div class="movie-poster">💀</div>
-                    <div class="movie-info">
-                        <h3 class="movie-title">Trending Movie 5</h3>
-                        <div class="movie-meta">2024 • Horror</div>
-                        <div class="movie-rating">
-                            <span class="rating-stars">★★★★☆</span>
-                            <span>8.1</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="movie-card" onclick="handleMovieClick('movie6')">
-                    <div class="movie-poster">💕</div>
-                    <div class="movie-info">
-                        <h3 class="movie-title">Trending Movie 6</h3>
-                        <div class="movie-meta">2024 • Romance</div>
-                        <div class="movie-rating">
-                            <span class="rating-stars">★★★★☆</span>
-                            <span>8.3</span>
-                        </div>
-                    </div>
-                </div>
+      <div className="trending-grid">
+        {trendingMovies.map((movie) => (
+          <div className="movie-card" key={movie.id}>
+            <div className="movie-poster">
+              {movie.poster_path ? (
+                <img
+                  src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
+                  alt={movie.title}
+                />
+              ) : (
+                <div className="poster-placeholder">🎬</div>
+              )}
             </div>
-        </section>
-  )
-}
 
-export default Trending
+            <div className="movie-info">
+              <h3 className="movie-title">{movie.title}</h3>
+              <div className="movie-meta">
+                {new Date(movie.release_date).getFullYear()} • {movie.original_language.toUpperCase()}
+              </div>
+              <div className="movie-rating">
+                <span className="rating-stars">⭐</span>
+                <span>{movie.vote_average.toFixed(1)}</span>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+};
+
+export default Trending;

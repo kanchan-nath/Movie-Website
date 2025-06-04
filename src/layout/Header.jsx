@@ -1,24 +1,47 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
-const Header = () => {
+import FetchApi from '../api/FetchApi'
+import { useNavigate } from 'react-router-dom';
 
-      const activeStyle = {
+const Header = ({enterInput,setEnterInput }) => {
+const navigate = useNavigate();
+
+
+    const activeStyle = {
     color: 'red',
     fontWeight: 'bold',
     
-  }
+}
+const handleApi=  async ()=>{
+        //is mein keya llikhu
+        navigate("/movie");
 
-  return (
-     
+}
+
+const chnageEnterInput = (e)=>{
+    setEnterInput (e.target.value)
+}
+
+const handleKeyDown=(e)=>{
+    if (e.key == "Enter"){
+        navigate("/movie");
+        // handleApi()
+        //is mein keya llikhu
+    }
+}
+
+
+return (
+    
     <header class="header">
         <nav class="navbar">
             <div class="nav-brand">
-                <i class="fas fa-film"></i>
+                <i class="fas fa-film"></i> 
                 <span>MovieHub</span>
             </div>
             <div class="nav-search">
-                <input type="text" placeholder="Search movies..." class="search-input" onInput=""/>
-                <button class="search-btn" onClick="">
+                <input type="text" placeholder="Search movies..." class="search-input" value ={enterInput} onChange={chnageEnterInput} onKeyDown={handleKeyDown}/>
+                <button class="search-btn" onClick={handleApi}>
                     <i class="fas fa-search"></i>
                 </button>
             </div>

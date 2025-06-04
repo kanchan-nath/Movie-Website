@@ -1,99 +1,94 @@
-import React from 'react'
-// import"./Style/style.css"
-const Movie = () => {
+import React, { useState, useEffect } from 'react'
+// import "./Style/style.css"
+import Header from '../layout/Header.jsx'
+import FetchApi from "../api/FetchApi"
+
+const Movie = ({ enterInput, setEnterInput }) => {
+  const [movies, setMovies] = useState([])
+
+  useEffect(() => {
+    const FetchMovie = async () => {
+        try {
+            const res = await FetchApi(enterInput)
+            setMovies(res.data.results)
+            // console.log(res.data.results)
+            
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    if (enterInput) {
+      FetchMovie()
+    }
+  }, [enterInput])
+
   return (
-    <main class="main-content">
-        <div class="container">
-            <div class="section-header">
-                <h2> Movies</h2>
-                <div class="view-toggle">
-                    <button class="toggle-btn active" onClick="">
-                        <i class="fas fa-th"></i>
-                    </button>
-                    <button class="toggle-btn" onClick="">
-                        <i class="fas fa-list"></i>
-                    </button>
-                </div>
-            </div>
-            
-        
-            <div class="loading" style={{ display: 'none' }}>
-                <div class="spinner"></div>
-                <p>Loading movies...</p>
-            </div>
-
-        
-            <div class="movies-grid" id="moviesGrid">
-            
-                <div class="movie-card" onClick="">
-                    <div class="movie-poster">
-                        <div class="poster-placeholder">
-                            <i class="fas fa-image"></i>
-                        </div>
-                        <div class="movie-overlay">
-                            <button class="play-btn">
-                                <i class="fas fa-play"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="movie-info">
-                        <h3>Sample Movie Title</h3>
-                        <div class="movie-meta">
-                            <span class="rating">
-                                <i class="fas fa-star"></i>
-                                8.5
-                            </span>
-                            <span class="year">2024</span>
-                        </div>
-                        <p class="movie-description">
-                            Sample description of the movie that will be replaced with actual data from API...
-                        </p>
-                        <div class="movie-genres">
-                            <span class="genre-tag">Action</span>
-                            <span class="genre-tag">Adventure</span>
-                        </div>
-                    </div>
-                </div>
-
-               
-                <div class="movie-card" onClick="">
-                    <div class="movie-poster">
-                        <div class="poster-placeholder">
-                            <i class="fas fa-image"></i>
-                        </div>
-                        <div class="movie-overlay">
-                            <button class="play-btn">
-                                <i class="fas fa-play"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="movie-info">
-                        <h3>Another Movie</h3>
-                        <div class="movie-meta">
-                            <span class="rating">
-                                <i class="fas fa-star"></i>
-                                7.8
-                            </span>
-                            <span class="year">2023</span>
-                        </div>
-                        <p class="movie-description">
-                            Another sample description that will be replaced...
-                        </p>
-                        <div class="movie-genres">
-                            <span class="genre-tag">Comedy</span>
-                            <span class="genre-tag">Drama</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-           
-            <div class="load-more-container">
-                <button class="load-more-btn" onClick="">
-                    Load More Movies
-                </button>
-            </div>
+    <main className="main-content">
+      <div className="container">
+        <div className="section-header">
+          <h2> Movies</h2>
+          <div className="view-toggle">
+            <button className="toggle-btn active">
+              <i className="fas fa-th"></i>
+            </button>
+            <button className="toggle-btn">
+              <i className="fas fa-list"></i>
+            </button>
+          </div>
         </div>
+
+        <div className="loading" style={{ display: 'none' }}>
+          <div className="spinner"></div>
+          <p>Loading movies...</p>
+        </div>
+
+        <div className="movies-grid" id="moviesGrid">
+          {movies.map((curElem) => (
+            <div className="movie-card" key={curElem.id}>
+              <div className="movie-poster">
+                {curElem.poster_path ? (
+                  <img
+                    src={`https://image.tmdb.org/t/p/w500${curElem.poster_path}`}
+                    alt={curElem.title}
+                    className="poster-image"
+                  />
+                ) : (
+                  <div className="poster-placeholder">
+                    <i className="fas fa-image"></i>
+                  </div>
+                )}
+                <div className="movie-overlay">
+                  <button className="play-btn">
+                    <i className="fas fa-play"></i>
+                  </button>
+                </div>
+              </div>
+              <div className="movie-info">
+                <h3>{curElem.title}</h3>
+                <div className="movie-meta">
+                  <span className="rating">
+                    <i className="fas fa-star"></i> {curElem.vote_average}
+                  </span>
+                  <span className="year">{new Date(curElem.release_date).getFullYear()}</span>
+                  <span className="year" style={{ textTransform: "uppercase" }}>
+                    {curElem.original_language}
+                  </span>
+                </div>
+                <p className="movie-description">{curElem.overview}</p>
+                <div className="movie-genres">
+                  <span className="genre-tag">Popularity: {curElem.popularity}</span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* <div className="load-more-container">
+        <button className="load-more-btn">
+          Load More Movies
+        </button>
+      </div> */}
     </main>
   )
 }

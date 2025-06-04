@@ -1,4 +1,4 @@
-import React from 'react'
+import React,  { useState } from 'react'
 import AppLayout from "./layout/AppLayout"
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import HeroSection from './components/HeroSection'
@@ -12,10 +12,15 @@ import Contact from './components/Contact'
 import Privacy from './components/Privacy'
 import Terms from './components/Terms'
 const App = () => {
+const [enterInput, setEnterInput] = useState('')
 
   const router = createBrowserRouter([{
+
     path: "/",
-    element: <AppLayout/>,
+    element: <AppLayout
+    enterInput = {enterInput}
+    setEnterInput = {setEnterInput}
+    />,
     children:([
       {
         path:"/",
@@ -23,7 +28,10 @@ const App = () => {
       },
       {
         path:"/movie",
-        element: <Movie/>,
+        element: <Movie
+        enterInput = {enterInput}
+        setEnterInput = {setEnterInput}
+        />,
       },
       {
         path:"/trending",

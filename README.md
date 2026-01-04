@@ -1,4 +1,4 @@
-🎬 Movie Website 🎥
+🎬 Movie Website - Updated🎥
 A responsive and interactive Movie Website built using React, Axios, and The Movie Database (TMDb) API, styled with HTML, CSS, and JavaScript.
 
 🚀 Features
